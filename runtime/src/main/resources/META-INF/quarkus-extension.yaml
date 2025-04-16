@@ -1,0 +1,16 @@
+name: "ORAS SDK extension"
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+metadata:
+  keywords:
+    - "oci"
+    - "storage"
+    - "kubernetes"
+  guide: "https://quarkiverse.github.io/quarkiverse-docs/quarkus-oras/dev/index.html"
+  categories:
+    - "oci"
+    - "oras"
+  status: "stable"
+  config:
+    - "quarkus.oras.registry"
+    - "quarkus.oras.layout"
+  description: "Quarkus Extension for ORAS Java SDK"
