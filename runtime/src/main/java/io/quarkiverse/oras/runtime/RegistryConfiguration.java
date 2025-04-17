@@ -5,6 +5,14 @@ import java.util.Optional;
 import io.smallrye.config.WithDefault;
 
 public interface RegistryConfiguration {
+
+    /**
+     * The registry default host
+     *
+     * @asciidoclet
+     */
+    Optional<String> host();
+
     /**
      * The registry username
      *

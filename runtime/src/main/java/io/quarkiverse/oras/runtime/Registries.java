@@ -5,8 +5,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import jakarta.inject.Singleton;
 
-import org.slf4j.LoggerFactory;
-
 import io.quarkus.arc.Arc;
 import land.oras.Registry;
 
@@ -29,12 +27,10 @@ public class Registries {
     }
 
     public static Registry fromName(String registryName) {
-        LoggerFactory.getLogger(RegistriesConfiguration.class).info("Resolving registry for {}", registryName);
         return Arc.container().instance(Registries.class).get().getRegistry(registryName);
     }
 
     public Registry getRegistry(String registryName) {
-        LoggerFactory.getLogger(RegistriesConfiguration.class).info("Getting registry for {}", registryName);
         return registries.computeIfAbsent(registryName, this::createRegistry);
     }
 
@@ -42,21 +38,23 @@ public class Registries {
         RegistryConfiguration configuration = getConfiguration(registryName);
 
         Registry.Builder builder = Registry.Builder.builder();
+
+        // Set username/password if present
         if (configuration.username().isPresent() && configuration.password().isPresent()) {
             builder.defaults(configuration.username().get(), configuration.password().get());
+        }
+        // Set host if present
+        if (configuration.host().isPresent()) {
+            builder.withRegistry(configuration.host().get());
         }
         if (!configuration.secure()) {
             builder.insecure();
         }
 
-        LoggerFactory.getLogger(RegistriesConfiguration.class).info("Creating registry for {}", registryName);
-
         return builder.build();
     }
 
     private RegistryConfiguration getConfiguration(String registryName) {
-        LoggerFactory.getLogger(RegistriesConfiguration.class).info("Found build time registries: {}",
-                registriesConfiguration.names().keySet());
         if (!registriesConfiguration.names().containsKey(registryName)) {
             throw new IllegalArgumentException("No Registry named '" + registryName + "' exists");
         }
