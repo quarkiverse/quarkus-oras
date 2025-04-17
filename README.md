@@ -19,3 +19,14 @@ Quarkus ORAS is a Quarkus extension for the [ORAS Java SDK](https://github.com/o
 ORAS is a library to manage OCI artifacts into an OCI compliant registry.
 
 The main purpose of this extension is to make ORAS work in a native executable built with GraalVM/Mandrel and support auto-configuration and dependency injection.
+
+## Contributors ✨
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
