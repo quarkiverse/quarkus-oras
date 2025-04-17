@@ -25,6 +25,13 @@ The main purpose of this extension is to make ORAS work in a native executable b
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="20%"><a href="https://github.com/jonesbusy"><img src="https://avatars.githubusercontent.com/u/825750?v=4?s=100" width="100px;" alt="Valentin Delaye"/><br /><sub><b>Valentin Delaye</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-oras/commits?author=jonesbusy" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
