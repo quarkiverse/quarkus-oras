@@ -4,17 +4,7 @@
   ],
   "imageSize": 100,
   "commit": false,
-  "contributors": [
-    {
-      "login": "jonesbusy",
-      "name": "Valentin Delaye",
-      "avatar_url": "https://avatars.githubusercontent.com/u/825750?v=4",
-      "profile": "https://github.com/jonesbusy",
-      "contributions": [
-        "code"
-      ]
-    }
-  ],
+  "contributors": [],
   "contributorsPerLine": 5,
   "projectName": "quarkus-oras",
   "projectOwner": "quarkiverse",
