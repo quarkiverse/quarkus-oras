@@ -1,5 +1,6 @@
 package io.quarkiverse.oras.deployment;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -17,9 +18,45 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.IndexDependencyBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedPackageBuildItem;
+import io.quarkus.deployment.pkg.builditem.CurateOutcomeBuildItem;
+import io.quarkus.maven.dependency.ArtifactCoords;
+import io.quarkus.maven.dependency.Dependency;
+import io.quarkus.paths.PathFilter;
+import land.oras.Annotations;
+import land.oras.ArtifactType;
+import land.oras.Config;
+import land.oras.Describable;
+import land.oras.Descriptor;
+import land.oras.Index;
+import land.oras.Layer;
+import land.oras.Manifest;
+import land.oras.ManifestDescriptor;
+import land.oras.OCILayout;
 import land.oras.Registry;
+import land.oras.Repositories;
+import land.oras.Subject;
+import land.oras.Tags;
+import land.oras.auth.HttpClient;
+import land.oras.exception.Error;
 
 class RegistryProcessor {
+
+    // ZSTD is used by ORAS for compression
+    private static final ArtifactCoords ZSTD_ARTIFACT = Dependency.of("com.github.luben", "zstd-jni", "*");
+    private static final PathFilter ZSTH_RESOURCE_FILTER = PathFilter.forIncludes(List.of(
+            "linux/**",
+            "win/**",
+            "freebsd/**",
+            "darwin/**"));
+
+    @BuildStep
+    IndexDependencyBuildItem indexZstd() {
+        return new IndexDependencyBuildItem(ZSTD_ARTIFACT.getGroupId(), ZSTD_ARTIFACT.getArtifactId());
+    }
 
     @Record(ExecutionTime.RUNTIME_INIT)
     @BuildStep
@@ -48,6 +85,56 @@ class RegistryProcessor {
                     // Pass runtime configuration to ensure initialization order
                     registriesRecorder.registrySupplier(registryName)));
         }
+    }
+
+    @BuildStep
+    void nativeLib(CurateOutcomeBuildItem curateOutcome, BuildProducer<NativeImageResourceBuildItem> nativeBuildItemProducer) {
+        var dependencies = curateOutcome.getApplicationModel().getRuntimeDependencies();
+        nativeBuildItemProducer.produce(NativeImageResourceBuildItem.ofDependencyResources(
+                dependencies, ZSTD_ARTIFACT, ZSTH_RESOURCE_FILTER));
+    }
+
+    @BuildStep
+    void registerZstdReflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClassProducer) {
+        reflectiveClassProducer.produce(ReflectiveClassBuildItem.builder(
+                "com.github.luben.zstd.ZstdCompressCtx",
+                "com.github.luben.zstd.ZstdDecompressCtx",
+                "com.github.luben.zstd.ZstdDictCompress",
+                "com.github.luben.zstd.ZstdDictDecompress",
+                "com.github.luben.zstd.ZstdDirectBufferCompressingStream$1",
+                "com.github.luben.zstd.ZstdDirectBufferCompressingStreamNoFinalizer",
+                "com.github.luben.zstd.ZstdDirectBufferDecompressingStream$1",
+                "com.github.luben.zstd.ZstdDirectBufferDecompressingStreamNoFinalizer",
+                "com.github.luben.zstd.ZstdInputStreamNoFinalizer",
+                "com.github.luben.zstd.ZstdOutputStreamNoFinalizer")
+                .fields()
+                .build());
+    }
+
+    @BuildStep
+    ReflectiveClassBuildItem registerOrasReflection() {
+        return ReflectiveClassBuildItem.builder(
+                Annotations.class,
+                ArtifactType.class,
+                Config.class,
+                Descriptor.class,
+                Describable.class,
+                Error.class,
+                HttpClient.TokenResponse.class,
+                Index.class,
+                Layer.class,
+                Manifest.class,
+                ManifestDescriptor.class,
+                OCILayout.class,
+                Repositories.class,
+                Subject.class,
+                Tags.class).methods().constructors().fields().build();
+    }
+
+    @BuildStep
+    void runtimePackages(BuildProducer<RuntimeInitializedPackageBuildItem> packagesProducer) {
+        packagesProducer.produce(new RuntimeInitializedPackageBuildItem(
+                "com.github.luben.zstd"));
     }
 
     private static <T> SyntheticBeanBuildItem createRegistryBuildItem(

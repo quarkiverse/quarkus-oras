@@ -20,6 +20,11 @@ ORAS is a library to manage OCI artifacts into an OCI compliant registry.
 
 The main purpose of this extension is to make ORAS work in a native executable built with GraalVM/Mandrel and support auto-configuration and dependency injection.
 
+## Run tests
+
+mvn verify
+mvn verify -Dnative -Dnative.surefire.skip
+
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
