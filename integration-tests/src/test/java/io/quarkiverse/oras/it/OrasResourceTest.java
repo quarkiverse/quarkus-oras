@@ -13,7 +13,7 @@ public class OrasResourceTest {
 
     @Test
     public void testRegistryInjection() {
-        given().when().get("/oras-registry/injection").then().statusCode(200).body(is("ok"));
+        given().when().get("/oras-registry/injection").then().statusCode(200).body(is("Injection works"));
     }
 
     @Test

@@ -7,7 +7,29 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-host]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-host[`quarkus.oras.registries."names".host`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-enabled]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-enabled[`quarkus.oras.registries."names".enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+An optional boolean to enable the registry client.
+Defaults to `true`
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a| [[quarkus-oras_quarkus-oras-registries-names-host]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-host[`quarkus.oras.registries."names".host`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".host+++[]
 endif::add-copy-button-to-config-props[]
@@ -26,9 +48,9 @@ Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__HOST+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|
+|required icon:exclamation-circle[title=Configuration property is required]
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-username]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-username[`quarkus.oras.registries."names".username`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-username]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-username[`quarkus.oras.registries."names".username`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".username+++[]
 endif::add-copy-button-to-config-props[]
@@ -49,7 +71,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-password]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-password[`quarkus.oras.registries."names".password`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-password]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-password[`quarkus.oras.registries."names".password`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".password+++[]
 endif::add-copy-button-to-config-props[]
@@ -70,7 +92,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-secure]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-secure[`quarkus.oras.registries."names".secure`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-secure]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-secure[`quarkus.oras.registries."names".secure`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".secure+++[]
 endif::add-copy-button-to-config-props[]
@@ -87,28 +109,6 @@ Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__SECURE+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`true`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-enabled]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-enabled[`quarkus.oras.registries."names".enabled`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.oras.registries."names".enabled+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-An optional boolean to enable the registry client.
-Defaults to `true`
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__ENABLED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean

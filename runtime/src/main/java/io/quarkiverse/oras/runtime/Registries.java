@@ -5,6 +5,9 @@ import java.util.concurrent.ConcurrentMap;
 
 import jakarta.inject.Singleton;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.quarkus.arc.Arc;
 import land.oras.Registry;
 
@@ -12,9 +15,19 @@ import land.oras.Registry;
 public class Registries {
 
     /**
-     * Build time configuration
+     * Logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(Registries.class);
+
+    /**
+     * Runtime configuration
      */
     private final RegistriesConfiguration registriesConfiguration;
+
+    /**
+     * Runtime configuration
+     */
+    private final RegistriesBuildConfiguration registriesBuildConfiguration;
 
     /**
      * Registries
@@ -22,7 +35,8 @@ public class Registries {
     private final ConcurrentMap<String, Registry> registries = new ConcurrentHashMap<>();
 
     public Registries(
-            RegistriesConfiguration registriesConfiguration) {
+            RegistriesBuildConfiguration registriesBuildConfiguration, RegistriesConfiguration registriesConfiguration) {
+        this.registriesBuildConfiguration = registriesBuildConfiguration;
         this.registriesConfiguration = registriesConfiguration;
     }
 
@@ -37,15 +51,11 @@ public class Registries {
     public Registry createRegistry(String registryName) {
         RegistryConfiguration configuration = getConfiguration(registryName);
 
-        Registry.Builder builder = Registry.Builder.builder();
+        Registry.Builder builder = Registry.Builder.builder().withRegistry(configuration.host());
 
         // Set username/password if present
         if (configuration.username().isPresent() && configuration.password().isPresent()) {
             builder.defaults(configuration.username().get(), configuration.password().get());
-        }
-        // Set host if present
-        if (configuration.host().isPresent()) {
-            builder.withRegistry(configuration.host().get());
         }
         if (!configuration.secure()) {
             builder.insecure();
@@ -55,7 +65,13 @@ public class Registries {
     }
 
     private RegistryConfiguration getConfiguration(String registryName) {
-        if (!registriesConfiguration.names().containsKey(registryName)) {
+
+        LOG.debug("Getting registry configuration for '{}'", registryName);
+        registriesBuildConfiguration.getRegistries().forEach((key, value) -> {
+            LOG.debug("Registry '{}' enabled '{}'", key, value.enabled());
+        });
+
+        if (!registriesBuildConfiguration.getRegistries().containsKey(registryName)) {
             throw new IllegalArgumentException("No Registry named '" + registryName + "' exists");
         }
 

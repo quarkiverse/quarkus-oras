@@ -9,7 +9,7 @@ import land.oras.Registry;
 public class RegistriesRecorder {
 
     public Supplier<Registry> registrySupplier(
-            String registryName) {
+            String registryName, @SuppressWarnings("unused") RegistriesConfiguration registriesConfiguration) {
         return () -> Registries.fromName(registryName);
     }
 }

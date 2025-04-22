@@ -1,7 +1,6 @@
 package io.quarkiverse.oras.test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.inject.Inject;
 
@@ -25,7 +24,6 @@ public class OrasOneRegistryInsecureConfigurationTest {
     public void shouldHaveOneInsecureRegistry() {
         RegistryConfiguration configuration = registriesConfiguration.names().get("foobar");
         assertFalse(configuration.secure(), "Registry should be insecure");
-        assertTrue(configuration.enabled(), "Registry should be enabled");
         assertFalse(configuration.username().isPresent(), "Registry should not have username");
         assertFalse(configuration.password().isPresent(), "Registry should not have password");
     }
