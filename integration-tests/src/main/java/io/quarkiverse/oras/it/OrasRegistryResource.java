@@ -1,14 +1,13 @@
 package io.quarkiverse.oras.it;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import io.quarkiverse.oras.runtime.OrasRegistry;
 import land.oras.ContainerRef;
 import land.oras.LocalPath;
 import land.oras.Registry;
@@ -19,23 +18,26 @@ import land.oras.utils.Const;
 @ApplicationScoped
 public class OrasRegistryResource {
 
-    @Inject
-    @Named("foo")
-    Registry fooRegistry;
+    @OrasRegistry("foo")
+    Registry foo;
 
-    @Inject
-    @Named("bar")
-    Registry barRegistry;
+    @OrasRegistry("bar")
+    Registry bar;
 
-    @Inject
-    @Named("docker")
+    @OrasRegistry("samples")
+    Registry samples;
+
+    @OrasRegistry("docker")
     Registry docker;
 
     @Path("/injection")
     @GET
     @Produces("text/plain")
-    public Response checkNotNot() {
-        return Response.ok("ok").build();
+    public Response injectionWorks() {
+        if (docker == null || foo == null || bar == null || samples == null) {
+            return Response.serverError().entity("Injection failed").build();
+        }
+        return Response.ok("Injection works").build();
     }
 
     @GET

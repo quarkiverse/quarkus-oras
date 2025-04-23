@@ -4,13 +4,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.quarkiverse.oras.runtime.OrasRegistry;
 import io.quarkiverse.oras.runtime.Registries;
+import io.quarkiverse.oras.runtime.RegistriesBuildConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesRecorder;
-import io.quarkiverse.oras.runtime.RegistryConfiguration;
+import io.quarkiverse.oras.runtime.RegistryBuildConfiguration;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
@@ -18,6 +22,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.IndexDependencyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
@@ -45,13 +50,25 @@ import land.oras.exception.Error;
 
 class RegistryProcessor {
 
+    private static final String FEATURE = "oras-registry";
+
+    /**
+     * Logger for the {@link RegistryProcessor}.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(RegistryProcessor.class);
+
     // ZSTD is used by ORAS for compression
     private static final ArtifactCoords ZSTD_ARTIFACT = Dependency.of("com.github.luben", "zstd-jni", "*");
-    private static final PathFilter ZSTH_RESOURCE_FILTER = PathFilter.forIncludes(List.of(
+    private static final PathFilter ZSTD_RESOURCE_FILTER = PathFilter.forIncludes(List.of(
             "linux/**",
             "win/**",
             "freebsd/**",
             "darwin/**"));
+
+    @BuildStep
+    FeatureBuildItem feature() {
+        return new FeatureBuildItem(FEATURE);
+    }
 
     @BuildStep
     IndexDependencyBuildItem indexZstd() {
@@ -62,28 +79,33 @@ class RegistryProcessor {
     @BuildStep
     void produce(
             RegistriesConfiguration registriesConfiguration,
+            RegistriesBuildConfiguration registriesBuildConfiguration,
             RegistriesRecorder registriesRecorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeanBuildItemBuildProducer,
             BuildProducer<AdditionalBeanBuildItem> additionalBeans) {
-        if (registriesConfiguration.names().isEmpty()) {
+        if (registriesBuildConfiguration.getRegistries().isEmpty()) {
+            LOG.debug("No registries configured. No beans will be produced.");
             return;
+        }
+        for (Map.Entry<String, RegistryBuildConfiguration> registry : registriesBuildConfiguration.getRegistries().entrySet()) {
+            LOG.debug("Registry '{}' enabled: '{}'", registry.getKey(), registry.getValue().enabled());
         }
 
         additionalBeans.produce(AdditionalBeanBuildItem.builder()
-                .addBeanClass(Named.class).build());
+                .addBeanClass(OrasRegistry.class).build());
         additionalBeans.produce(AdditionalBeanBuildItem.builder()
                 .addBeanClasses(Registries.class)
                 .setUnremovable()
                 .setDefaultScope(DotNames.SINGLETON).build());
 
-        for (Map.Entry<String, RegistryConfiguration> entry : registriesConfiguration.names()
+        for (Map.Entry<String, RegistryBuildConfiguration> entry : registriesBuildConfiguration.names()
                 .entrySet()) {
             var registryName = entry.getKey();
             syntheticBeanBuildItemBuildProducer.produce(createRegistryBuildItem(
                     registryName,
                     Registry.class,
                     // Pass runtime configuration to ensure initialization order
-                    registriesRecorder.registrySupplier(registryName)));
+                    registriesRecorder.registrySupplier(registryName, registriesConfiguration)));
         }
     }
 
@@ -91,7 +113,7 @@ class RegistryProcessor {
     void nativeLib(CurateOutcomeBuildItem curateOutcome, BuildProducer<NativeImageResourceBuildItem> nativeBuildItemProducer) {
         var dependencies = curateOutcome.getApplicationModel().getRuntimeDependencies();
         nativeBuildItemProducer.produce(NativeImageResourceBuildItem.ofDependencyResources(
-                dependencies, ZSTD_ARTIFACT, ZSTH_RESOURCE_FILTER));
+                dependencies, ZSTD_ARTIFACT, ZSTD_RESOURCE_FILTER));
     }
 
     @BuildStep
@@ -151,7 +173,7 @@ class RegistryProcessor {
                 .addValue("value", registryName)
                 .done();
         configurator.addQualifier().annotation(DotNames.NAMED).addValue("value", registryName).done();
-        configurator.addQualifier().annotation(Named.class)
+        configurator.addQualifier().annotation(OrasRegistry.class)
                 .addValue("value", registryName).done();
 
         return configurator.done();

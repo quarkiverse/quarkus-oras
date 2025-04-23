@@ -2,8 +2,12 @@ package io.quarkiverse.oras.runtime;
 
 import java.util.Optional;
 
+import io.quarkus.runtime.annotations.ConfigGroup;
+import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
 
+@ConfigMapping(prefix = "quarkus.oras.registries")
+@ConfigGroup
 public interface RegistryConfiguration {
 
     /**
@@ -11,7 +15,7 @@ public interface RegistryConfiguration {
      *
      * @asciidoclet
      */
-    Optional<String> host();
+    String host();
 
     /**
      * The registry username
@@ -35,14 +39,5 @@ public interface RegistryConfiguration {
      */
     @WithDefault("true")
     boolean secure();
-
-    /**
-     * An optional boolean to enable the registry client.
-     * Defaults to `true`
-     *
-     * @asciidoclet
-     */
-    @WithDefault("true")
-    boolean enabled();
 
 }

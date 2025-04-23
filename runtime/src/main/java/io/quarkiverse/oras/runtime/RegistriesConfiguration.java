@@ -8,7 +8,7 @@ import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithParentName;
 
 @ConfigMapping(prefix = "quarkus.oras.registries")
-@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
 public interface RegistriesConfiguration {
 
     /**
