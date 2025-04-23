@@ -1,5 +1,7 @@
 package io.quarkiverse.oras.it;
 
+import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -63,6 +65,13 @@ public class OrasRegistryResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String manifest() {
         return docker.getIndex(ContainerRef.parse("library/alpine:latest")).getJson();
+    }
+
+    @GET
+    @Path("/get-tags")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getTags() {
+        return docker.getTags(ContainerRef.parse("library/alpine:latest")).tags();
     }
 
 }

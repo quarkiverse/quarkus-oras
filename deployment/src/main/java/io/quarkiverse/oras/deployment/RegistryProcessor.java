@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import jakarta.inject.Singleton;
 
+import org.jboss.jandex.DotName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.IndexDependencyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
@@ -31,22 +33,8 @@ import io.quarkus.deployment.pkg.builditem.CurateOutcomeBuildItem;
 import io.quarkus.maven.dependency.ArtifactCoords;
 import io.quarkus.maven.dependency.Dependency;
 import io.quarkus.paths.PathFilter;
-import land.oras.Annotations;
-import land.oras.ArtifactType;
-import land.oras.Config;
-import land.oras.Describable;
-import land.oras.Descriptor;
-import land.oras.Index;
-import land.oras.Layer;
-import land.oras.Manifest;
-import land.oras.ManifestDescriptor;
-import land.oras.OCILayout;
+import land.oras.OrasModel;
 import land.oras.Registry;
-import land.oras.Repositories;
-import land.oras.Subject;
-import land.oras.Tags;
-import land.oras.auth.HttpClient;
-import land.oras.exception.Error;
 
 class RegistryProcessor {
 
@@ -65,6 +53,8 @@ class RegistryProcessor {
             "freebsd/**",
             "darwin/**"));
 
+    private static final ArtifactCoords ORAS_ARTIFACT = Dependency.of("land.oras", "oras-java-sdk", "*");
+
     @BuildStep
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
@@ -73,6 +63,11 @@ class RegistryProcessor {
     @BuildStep
     IndexDependencyBuildItem indexZstd() {
         return new IndexDependencyBuildItem(ZSTD_ARTIFACT.getGroupId(), ZSTD_ARTIFACT.getArtifactId());
+    }
+
+    @BuildStep
+    IndexDependencyBuildItem indexOras() {
+        return new IndexDependencyBuildItem(ORAS_ARTIFACT.getGroupId(), ORAS_ARTIFACT.getArtifactId());
     }
 
     @Record(ExecutionTime.RUNTIME_INIT)
@@ -134,23 +129,25 @@ class RegistryProcessor {
     }
 
     @BuildStep
-    ReflectiveClassBuildItem registerOrasReflection() {
-        return ReflectiveClassBuildItem.builder(
-                Annotations.class,
-                ArtifactType.class,
-                Config.class,
-                Descriptor.class,
-                Describable.class,
-                Error.class,
-                HttpClient.TokenResponse.class,
-                Index.class,
-                Layer.class,
-                Manifest.class,
-                ManifestDescriptor.class,
-                OCILayout.class,
-                Repositories.class,
-                Subject.class,
-                Tags.class).methods().constructors().fields().build();
+    ReflectiveClassBuildItem registerOrasReflection(CombinedIndexBuildItem combinedIndex) {
+
+        var annotations = combinedIndex.getIndex().getAnnotations(DotName.createSimple(OrasModel.class.getName()));
+
+        LOG.debug("Found " + annotations.size() + " classes annotated with @OrasModel");
+
+        String[] classNames = annotations.stream()
+                .map(annotation -> annotation.target().asClass().name().toString())
+                .distinct()
+                .toArray(String[]::new);
+
+        LOG.debug("Class names: " + String.join(", ", classNames));
+
+        return ReflectiveClassBuildItem
+                .builder(classNames)
+                .methods()
+                .constructors()
+                .fields()
+                .build();
     }
 
     @BuildStep

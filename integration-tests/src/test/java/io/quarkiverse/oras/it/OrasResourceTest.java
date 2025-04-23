@@ -17,9 +17,13 @@ public class OrasResourceTest {
     }
 
     @Test
-    @Disabled
     public void testPullIndex() {
         given().when().get("/oras-registry/pull-index").then().statusCode(200);
+    }
+
+    @Test
+    public void testGetTags() {
+        given().when().get("/oras-registry/get-tags").then().statusCode(200);
     }
 
     @Test
