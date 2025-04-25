@@ -1,8 +1,10 @@
-= Quarkus Oras
+= Quarkus ORAS
 
 include::./includes/attributes.adoc[]
 
-TIP: Describe what the extension does here.
+Integrate https://github.com/oras-project/oras-java[ORAS Java SDK] Available for JDK and native build.
+
+image::https://oras.land/img/oras.svg[sunset.jpg][ORAS,200]
 
 == Installation
 
@@ -19,9 +21,42 @@ For instance, with Maven, add the following dependency to your POM file:
 </dependency>
 ----
 
+== Usage
+
+An `land.oras.Registry` is made available to your application as a CDI bean if configuration is found.
+
+For example to use the Docker Hub registry (anonymous), you can add the following configuration to your `application.properties` file:
+
+[source,properties]
+----
+quarkus.oras.registries.dockerhub.enabled=true
+quarkus.oras.registries.dockerhub.host=docker.io
+----
+
+
+[source,java]
+----
+package com.acme.oras;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import io.quarkiverse.oras.runtime.OrasRegistry;
+import land.oras.ContainerRef;
+import land.oras.Registry;
+
+@ApplicationScoped
+public class MySampleService {
+
+    @OrasRegistry("dockerhub")
+    Registry dockerhub;
+
+    public String getIndex() {
+        return hub.getIndex(ContainerRef.parse("library/alpine:latest")).getJson();
+    }
+
+}
+----
+
 [[extension-configuration-reference]]
 == Extension Configuration Reference
-
-TIP: Remove this section if you don't have Quarkus configuration properties in your extension.
 
 include::includes/quarkus-oras.adoc[leveloffset=+1, opts=optional]
