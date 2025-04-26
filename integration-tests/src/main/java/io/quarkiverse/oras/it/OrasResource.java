@@ -3,12 +3,14 @@ package io.quarkiverse.oras.it;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import io.quarkiverse.oras.runtime.OCILayouts;
 import io.quarkiverse.oras.runtime.OrasRegistry;
 import land.oras.ContainerRef;
 import land.oras.LocalPath;
@@ -16,9 +18,9 @@ import land.oras.Registry;
 import land.oras.utils.ArchiveUtils;
 import land.oras.utils.Const;
 
-@Path("/oras-registry")
+@Path("/oras")
 @ApplicationScoped
-public class OrasRegistryResource {
+public class OrasResource {
 
     @OrasRegistry("foo")
     Registry foo;
@@ -32,12 +34,19 @@ public class OrasRegistryResource {
     @OrasRegistry("docker")
     Registry docker;
 
+    @Inject
+    OCILayouts ociLayouts;
+
     @Path("/injection")
     @GET
     @Produces("text/plain")
     public Response injectionWorks() {
+        String layoutName = "test";
         if (docker == null || foo == null || bar == null || samples == null) {
-            return Response.serverError().entity("Injection failed").build();
+            return Response.serverError().entity("Registry Injection failed").build();
+        }
+        if (ociLayouts == null) {
+            return Response.serverError().entity("OCI Layouts Recorder failed").build();
         }
         return Response.ok("Injection works").build();
     }

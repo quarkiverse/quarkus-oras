@@ -56,6 +56,51 @@ public class MySampleService {
 }
 ----
 
+Since version `0.0.4` (not released yet), the extension supports OCI layouts. OCI layouts are a way to store artifacts in a local directory.
+
+OCI layouts can be used to store artifacts in a local directory.
+
+To control the location of OCI layouts, you can use the `quarkus.oras.layouts.path` property.
+
+[source,properties]
+----
+quarkus.oras.layouts.path=/var/storage/oci
+----
+
+On the Java side it's possible to retrieve instance of and OCI layout using by injecting `io.quarkiverse.oras.runtime.OrasLayouts`:
+
+[source,java]
+----
+package com.acme.oras;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Response;
+
+import org.jboss.resteasy.reactive.RestPath;
+import io.quarkiverse.oras.runtime.OCILayouts;
+import land.oras.LayoutRef;
+import land.oras.OCILayout;
+
+@Path("/v2")
+@ApplicationScoped
+public class MySampleResource {
+
+    @Inject
+    OCILayouts ociLayouts;
+
+    @GET
+    @Path("{name}/blobs/{digest}")
+    public Response headBlob(@RestPath("name") String name, @RestPath String digest) {
+        OCILayout ociLayout = ociLayouts.getLayout(name);
+        LayoutRef layoutRef = LayoutRef.parse("%s@%s".formatted(ociLayout.getPath(), digest));
+        return Response.ok(ociLayout.getBlob(layoutRef)).build();
+    }
+}
+----
+
 [[extension-configuration-reference]]
 == Extension Configuration Reference
 
