@@ -7,6 +7,27 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
+a| [[quarkus-oras_quarkus-oras-layouts-path]] [.property-path]##link:#quarkus-oras_quarkus-oras-layouts-path[`quarkus.oras.layouts.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.layouts.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path to storage
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_LAYOUTS_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_LAYOUTS_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`.`
+
 a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-enabled]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-enabled[`quarkus.oras.registries."names".enabled`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".enabled+++[]
