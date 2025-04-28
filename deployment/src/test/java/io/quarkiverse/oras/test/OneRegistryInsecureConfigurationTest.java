@@ -11,7 +11,7 @@ import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkiverse.oras.runtime.RegistryConfiguration;
 import io.quarkus.test.QuarkusUnitTest;
 
-public class OrasOneRegistryInsecureConfigurationTest {
+public class OneRegistryInsecureConfigurationTest {
 
     @Inject
     RegistriesConfiguration registriesConfiguration;

@@ -35,9 +35,8 @@ public class V2Resource {
     @Path("{name}/blobs/{digest}")
     public Response headBlob(@RestPath("name") String name, @RestPath String digest) {
         OCILayout ociLayout = ociLayouts.getLayout(name);
-        LayoutRef layoutRef = LayoutRef.parse("%s@%s".formatted(ociLayout.getPath(), digest));
         try {
-            byte[] blob = ociLayout.getBlob(layoutRef);
+            byte[] blob = ociLayout.getBlob(LayoutRef.of(ociLayout).withDigest(digest));
             return Response.ok()
                     .header(Const.CONTENT_LENGTH_HEADER, blob.length)
                     .build();
@@ -67,7 +66,7 @@ public class V2Resource {
 
         try {
             OCILayout ociLayout = ociLayouts.getLayout(name);
-            LayoutRef layoutRef = LayoutRef.parse("%s@%s".formatted(ociLayout.getPath(), digest));
+            LayoutRef layoutRef = LayoutRef.of(ociLayout).withDigest(digest);
             Layer layer = ociLayout.pushBlob(layoutRef, body);
             return Response.created(URI.create("/v2/%s/blobs/%s".formatted(name, layer.getDigest())))
                     .build();
@@ -82,7 +81,7 @@ public class V2Resource {
     @Path("{name}/blobs/{digest}")
     public Response getBlob(@RestPath("name") String name, @RestPath String digest) {
         OCILayout ociLayout = ociLayouts.getLayout(name);
-        LayoutRef layoutRef = LayoutRef.parse("%s@%s".formatted(ociLayout.getPath(), digest));
+        LayoutRef layoutRef = LayoutRef.of(ociLayout).withDigest(digest);
         byte[] blob = ociLayout.getBlob(layoutRef);
         return Response.ok(blob)
                 .build();

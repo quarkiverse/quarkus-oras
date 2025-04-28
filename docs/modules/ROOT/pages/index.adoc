@@ -56,7 +56,7 @@ public class MySampleService {
 }
 ----
 
-Since version `0.0.4` (not released yet), the extension supports OCI layouts. OCI layouts are a way to store artifacts in a local directory.
+The extension supports OCI layouts. OCI layouts are a way to store artifacts in a local directory.
 
 OCI layouts can be used to store artifacts in a local directory.
 
