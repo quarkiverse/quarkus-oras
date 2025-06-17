@@ -31,7 +31,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.23.3</quarkus.version>
-    <oras.version>0.2.11</oras.version>
+    <oras.version>0.2.12</oras.version>
   </properties>
 
   <dependencyManagement>
