@@ -34,6 +34,7 @@ mvn verify -Dnative -Dnative.surefire.skip
   <tbody>
     <tr>
       <td align="center" valign="top" width="20%"><a href="https://github.com/jonesbusy"><img src="https://avatars.githubusercontent.com/u/825750?v=4?s=100" width="100px;" alt="Valentin Delaye"/><br /><sub><b>Valentin Delaye</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-oras/commits?author=jonesbusy" title="Code">💻</a></td>
+      <td align="center" valign="top" width="20%"><a href="https://github.com/jasmdk"><img src="https://avatars.githubusercontent.com/u/8821406?v=4?s=100" width="100px;" alt="Jacob Stampe Mikkelsen"/><br /><sub><b>Jacob Stampe Mikkelsen</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-oras/commits?author=jasmdk" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
