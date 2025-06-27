@@ -34,6 +34,9 @@ public class OrasResource {
     @OrasRegistry("docker")
     Registry docker;
 
+    @OrasRegistry("devs")
+    Registry devServiceRegistry;
+
     @Inject
     OCILayouts ociLayouts;
 
@@ -81,6 +84,13 @@ public class OrasResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> getTags() {
         return docker.getTags(ContainerRef.parse("library/alpine:latest")).tags();
+    }
+
+    @GET
+    @Path("/devservice/get-repositories")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getDevserviceRepositories() {
+        return devServiceRegistry.getRepositories().repositories();
     }
 
 }

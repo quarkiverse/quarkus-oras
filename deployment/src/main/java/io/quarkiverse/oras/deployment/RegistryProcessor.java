@@ -19,16 +19,19 @@ import io.quarkiverse.oras.runtime.RegistryBuildConfiguration;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
+import io.quarkus.deployment.IsNormal;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
+import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.IndexDependencyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedPackageBuildItem;
+import io.quarkus.deployment.dev.devservices.DevServicesConfig;
 import io.quarkus.deployment.pkg.builditem.CurateOutcomeBuildItem;
 import io.quarkus.maven.dependency.ArtifactCoords;
 import io.quarkus.maven.dependency.Dependency;
@@ -154,6 +157,59 @@ class RegistryProcessor {
     void runtimePackages(BuildProducer<RuntimeInitializedPackageBuildItem> packagesProducer) {
         packagesProducer.produce(new RuntimeInitializedPackageBuildItem(
                 "com.github.luben.zstd"));
+    }
+
+    @BuildStep(onlyIfNot = IsNormal.class, onlyIf = DevServicesConfig.Enabled.class)
+    public DevServicesResultBuildItem createContainer(RegistriesBuildConfiguration registriesConfig,
+            OrasDevServicesConfig devServicesConfig) {
+
+        int basePort = devServicesConfig.basePort();
+
+        // If no registry entries are defined, don't create any containers
+        if (registriesConfig.names().isEmpty()) {
+            return null; // No containers to create
+        }
+
+        // Create a container for each registry entry
+        Map<String, String> configOverrides = new java.util.HashMap<>();
+        java.util.List<ZotContainer> containers = new java.util.ArrayList<>();
+        int portOffset = 0;
+
+        for (Map.Entry<String, RegistryBuildConfiguration> entry : registriesConfig.names().entrySet()) {
+            if (!entry.getValue().enabled() || !entry.getValue().devservice()) {
+                LOG.debug("Skipping devservice for registry: {}", entry.getKey());
+                continue; // Skip disabled registries
+            }
+            String registryName = entry.getKey();
+            int port = basePort + portOffset++;
+
+            ZotContainer container = new ZotContainer(devServicesConfig.imageName(), port).withReuse(devServicesConfig.reuse());
+            container.start();
+            containers.add(container);
+
+            // Create configuration overrides for each registry
+            configOverrides.put("quarkus.oras.registries." + registryName + ".host", container.getRegistry());
+            configOverrides.put("quarkus.oras.registries." + registryName + ".secure", "false");
+        }
+
+        // Get the ID of the first container as the primary ID
+        String primaryContainerId = containers.get(0).getContainerId();
+
+        // Create a combined close action for all containers as a Closeable
+        java.io.Closeable closeAction = () -> {
+            for (ZotContainer container : containers) {
+                try {
+                    container.close();
+                } catch (Exception e) {
+                    LOG.warn("Failed to stop container: " + e.getMessage(), e);
+                }
+            }
+        };
+
+        return new DevServicesResultBuildItem.RunningDevService(FEATURE,
+                primaryContainerId,
+                closeAction,
+                configOverrides).toBuildItem();
     }
 
     private static <T> SyntheticBeanBuildItem createRegistryBuildItem(
