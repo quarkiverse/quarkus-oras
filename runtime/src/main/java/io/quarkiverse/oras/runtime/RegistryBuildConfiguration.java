@@ -15,4 +15,12 @@ public interface RegistryBuildConfiguration {
     @WithDefault("true")
     boolean enabled();
 
+    /**
+     * An optional boolean to enable devserice for the registry.
+     * Defaults to `true`
+     *
+     * @asciidoclet
+     */
+    @WithDefault("true")
+    boolean devservice();
 }

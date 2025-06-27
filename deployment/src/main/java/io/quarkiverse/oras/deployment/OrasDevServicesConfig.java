@@ -11,12 +11,6 @@ import io.smallrye.config.WithDefault;
 @ConfigMapping(prefix = "quarkus.oras.devservices")
 @ConfigRoot(phase = ConfigPhase.BUILD_TIME)
 public interface OrasDevServicesConfig {
-    /**
-     * If DevServices has been explicitly enabled or disabled. By default,
-     * DevServices are enabled if the DevServices extension is enabled.
-     */
-    @WithDefault("true")
-    boolean enabled();
 
     /**
      * The container image name to use, for the Zot registry
@@ -33,8 +27,9 @@ public interface OrasDevServicesConfig {
 
     /**
      * Indicates if the registry container should be shared or reused.
-     * Defaults to true.
+     * Defaults to false.
      */
-    @WithDefault("true")
+    @WithDefault("false")
     boolean reuse();
+
 }

@@ -162,10 +162,6 @@ class RegistryProcessor {
     @BuildStep(onlyIfNot = IsNormal.class, onlyIf = DevServicesConfig.Enabled.class)
     public DevServicesResultBuildItem createContainer(RegistriesBuildConfiguration registriesConfig,
             OrasDevServicesConfig devServicesConfig) {
-        if (!devServicesConfig.enabled()) {
-            LOG.debug("Dev services for ORAS registries are disabled.");
-            return null; // No dev service to create
-        }
 
         int basePort = devServicesConfig.basePort();
 
@@ -180,8 +176,8 @@ class RegistryProcessor {
         int portOffset = 0;
 
         for (Map.Entry<String, RegistryBuildConfiguration> entry : registriesConfig.names().entrySet()) {
-            if (!entry.getValue().enabled()) {
-                LOG.debug("Skipping disabled registry: {}", entry.getKey());
+            if (!entry.getValue().enabled() || !entry.getValue().devservice()) {
+                LOG.debug("Skipping devservice for registry: {}", entry.getKey());
                 continue; // Skip disabled registries
             }
             String registryName = entry.getKey();

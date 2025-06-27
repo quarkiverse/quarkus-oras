@@ -46,4 +46,9 @@ public class OrasResourceTest {
         given().when().get("/oras/compress-zstd").then().statusCode(200).body(is("ok"));
     }
 
+    @Test
+    void testRegistryWithDevservice() {
+        given().when().get("/oras/devservice/get-repositories").then().statusCode(200);
+    }
+
 }
