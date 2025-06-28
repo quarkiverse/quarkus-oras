@@ -15,7 +15,7 @@ public interface OrasDevServicesConfig {
     /**
      * The container image name to use, for the Zot registry
      */
-    @WithDefault("ghcr.io/project-zot/zot-linux-amd64:v2.1.3")
+    @WithDefault("ghcr.io/project-zot/zot-linux-amd64:v2.1.5")
     String imageName();
 
     /**

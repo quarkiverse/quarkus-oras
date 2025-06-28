@@ -1,5 +1,6 @@
 package io.quarkiverse.oras.deployment;
 
+import java.io.Closeable;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -177,7 +178,7 @@ class RegistryProcessor {
 
         for (Map.Entry<String, RegistryBuildConfiguration> entry : registriesConfig.names().entrySet()) {
             if (!entry.getValue().enabled() || !entry.getValue().devservice()) {
-                LOG.debug("Skipping devservice for registry: {}", entry.getKey());
+                LOG.info("Skipping devservice for registry: {}", entry.getKey());
                 continue; // Skip disabled registries
             }
             String registryName = entry.getKey();
@@ -192,16 +193,21 @@ class RegistryProcessor {
             configOverrides.put("quarkus.oras.registries." + registryName + ".secure", "false");
         }
 
+        if (containers.isEmpty()) {
+            LOG.info("No dev services containers were started, as all registries are disabled or dev service is not enabled.");
+            return null;
+        }
+
         // Get the ID of the first container as the primary ID
         String primaryContainerId = containers.get(0).getContainerId();
 
         // Create a combined close action for all containers as a Closeable
-        java.io.Closeable closeAction = () -> {
+        Closeable closeAction = () -> {
             for (ZotContainer container : containers) {
                 try {
                     container.close();
                 } catch (Exception e) {
-                    LOG.warn("Failed to stop container: " + e.getMessage(), e);
+                    LOG.warn("Failed to stop container: {}", e.getMessage(), e);
                 }
             }
         };
