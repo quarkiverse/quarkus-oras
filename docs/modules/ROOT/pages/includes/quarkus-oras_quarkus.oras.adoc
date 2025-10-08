@@ -26,7 +26,7 @@ Environment variable: `+++QUARKUS_ORAS_DEVSERVICES_IMAGE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`ghcr.io/project-zot/zot-linux-amd64:v2.1.5`
+|`+++ghcr.io/project-zot/zot-linux-amd64:v2.1.5+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-base-port]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-base-port[`quarkus.oras.devservices.base-port`]##
 ifdef::add-copy-button-to-config-props[]
@@ -47,7 +47,7 @@ Environment variable: `+++QUARKUS_ORAS_DEVSERVICES_BASE_PORT+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`5000`
+|`+++5000+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-reuse]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-reuse[`quarkus.oras.devservices.reuse`]##
 ifdef::add-copy-button-to-config-props[]
@@ -68,7 +68,7 @@ Environment variable: `+++QUARKUS_ORAS_DEVSERVICES_REUSE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-oras_quarkus-oras-layouts-path]] [.property-path]##link:#quarkus-oras_quarkus-oras-layouts-path[`quarkus.oras.layouts.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -89,7 +89,7 @@ Environment variable: `+++QUARKUS_ORAS_LAYOUTS_PATH+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`.`
+|`+++.+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-enabled]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-enabled[`quarkus.oras.registries."names".enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -111,7 +111,7 @@ Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-devservice]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-devservice[`quarkus.oras.registries."names".devservice`]##
 ifdef::add-copy-button-to-config-props[]
@@ -133,7 +133,7 @@ Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__DEVSERVICE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-oras_quarkus-oras-registries-names-host]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-host[`quarkus.oras.registries."names".host`]##
 ifdef::add-copy-button-to-config-props[]
@@ -218,7 +218,7 @@ Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__SECURE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 |===
 
