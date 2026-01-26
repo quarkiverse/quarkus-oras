@@ -5,7 +5,7 @@
   <parent>
     <groupId>io.quarkiverse.oras</groupId>
     <artifactId>quarkus-oras-parent</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
   </parent>
   <artifactId>quarkus-oras-deployment</artifactId>
   <name>Quarkus Oras - Deployment</name>
