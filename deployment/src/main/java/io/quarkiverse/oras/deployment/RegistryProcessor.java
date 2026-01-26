@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import io.quarkiverse.oras.runtime.OrasRegistry;
 import io.quarkiverse.oras.runtime.Registries;
 import io.quarkiverse.oras.runtime.RegistriesBuildConfiguration;
-import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesRecorder;
 import io.quarkiverse.oras.runtime.RegistryBuildConfiguration;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
@@ -77,7 +76,6 @@ class RegistryProcessor {
     @Record(ExecutionTime.RUNTIME_INIT)
     @BuildStep
     void produce(
-            RegistriesConfiguration registriesConfiguration,
             RegistriesBuildConfiguration registriesBuildConfiguration,
             RegistriesRecorder registriesRecorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeanBuildItemBuildProducer,
@@ -104,7 +102,7 @@ class RegistryProcessor {
                     registryName,
                     Registry.class,
                     // Pass runtime configuration to ensure initialization order
-                    registriesRecorder.registrySupplier(registryName, registriesConfiguration)));
+                    registriesRecorder.registrySupplier(registryName)));
         }
     }
 
