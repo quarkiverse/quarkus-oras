@@ -4,20 +4,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.MountableFile;
 
-public class ZotContainer extends GenericContainer<ZotContainer> {
+import io.quarkus.deployment.builditem.Startable;
+
+/**
+ * A Testcontainers container for a Zot registry for Dev Services.
+ */
+public class ZotContainer extends GenericContainer<ZotContainer> implements Startable {
 
     private final int containerPort;
+    private final String registryName;
 
-    public ZotContainer(String imageName, int containerPort) {
+    public ZotContainer(String registryName, String imageName, int containerPort) {
         super(imageName);
+        this.registryName = registryName;
         this.containerPort = containerPort;
-        addExposedPort(containerPort);
-        // Wait for the catalog endpoint to be available (should return 200 without auth)
-        setWaitStrategy(Wait.forHttp("/v2/_catalog").forPort(containerPort).forStatusCode(200));
-
         try {
             // Zot config file
             Path configFile = Files.createTempFile("zot-config", ".json");
@@ -26,13 +28,13 @@ public class ZotContainer extends GenericContainer<ZotContainer> {
                             "storage": { "rootDirectory": "/var/lib/registry" },
                             "http": {
                               "address": "0.0.0.0",
-                              "port": %s
+                              "port": 5000
                             },
                             "extensions": {
                               "search": { "enable": true }
                             }
                           }
-                    """.formatted(containerPort);
+                    """;
 
             Files.writeString(configFile, configJson);
 
@@ -46,11 +48,27 @@ public class ZotContainer extends GenericContainer<ZotContainer> {
     }
 
     /**
-     * Get the registry URL
+     * Get the registry name
      *
-     * @return The registry URL
+     * @return The registry name
      */
-    public String getRegistry() {
-        return getHost() + ":" + getMappedPort(containerPort);
+    public String getRegistryName() {
+        return registryName;
+    }
+
+    @Override
+    protected void configure() {
+        super.configure();
+        addFixedExposedPort(containerPort, 5000);
+    }
+
+    @Override
+    public void close() {
+        super.close();
+    }
+
+    @Override
+    public String getConnectionInfo() {
+        return getHost() + ":" + containerPort;
     }
 }
