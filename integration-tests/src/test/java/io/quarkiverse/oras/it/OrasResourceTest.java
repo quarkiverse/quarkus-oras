@@ -47,8 +47,13 @@ public class OrasResourceTest {
     }
 
     @Test
-    void testRegistryWithDevservice() {
-        given().when().get("/oras/devservice/get-repositories").then().statusCode(200);
+    void testRegistryWithDevservice1() {
+        given().when().get("/oras/devservice/get-repositories1").then().statusCode(200);
+    }
+
+    @Test
+    void testRegistryWithDevservice2() {
+        given().when().get("/oras/devservice/get-repositories2").then().statusCode(200);
     }
 
 }

@@ -1,6 +1,7 @@
 package io.quarkiverse.oras.deployment;
 
-import java.io.Closeable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -159,7 +160,7 @@ class RegistryProcessor {
     }
 
     @BuildStep(onlyIfNot = IsProduction.class, onlyIf = DevServicesConfig.Enabled.class)
-    public DevServicesResultBuildItem createContainer(RegistriesBuildConfiguration registriesConfig,
+    public List<DevServicesResultBuildItem> createContainers(RegistriesBuildConfiguration registriesConfig,
             OrasDevServicesConfig devServicesConfig) {
 
         int basePort = devServicesConfig.basePort();
@@ -170,50 +171,39 @@ class RegistryProcessor {
         }
 
         // Create a container for each registry entry
-        Map<String, String> configOverrides = new java.util.HashMap<>();
-        java.util.List<ZotContainer> containers = new java.util.ArrayList<>();
+        List<ZotContainer> containers = new ArrayList<>();
         int portOffset = 0;
 
+        // Create every container for each enabled registry with devservice enabled
         for (Map.Entry<String, RegistryBuildConfiguration> entry : registriesConfig.names().entrySet()) {
             if (!entry.getValue().enabled() || !entry.getValue().devservice()) {
-                LOG.info("Skipping devservice for registry: {}", entry.getKey());
+                LOG.info("Skipping DevService for registry: {}", entry.getKey());
                 continue; // Skip disabled registries
             }
             String registryName = entry.getKey();
             int port = basePort + portOffset++;
 
-            ZotContainer container = new ZotContainer(devServicesConfig.imageName(), port).withReuse(devServicesConfig.reuse());
-            container.start();
+            ZotContainer container = new ZotContainer(registryName, devServicesConfig.imageName(), port)
+                    .withReuse(devServicesConfig.reuse());
             containers.add(container);
-
-            // Create configuration overrides for each registry
-            configOverrides.put("quarkus.oras.registries." + registryName + ".host", container.getRegistry());
-            configOverrides.put("quarkus.oras.registries." + registryName + ".secure", "false");
         }
 
         if (containers.isEmpty()) {
             LOG.info("No dev services containers were started, as all registries are disabled or dev service is not enabled.");
-            return null;
+            return Collections.emptyList();
         }
 
-        // Get the ID of the first container as the primary ID
-        String primaryContainerId = containers.get(0).getContainerId();
+        return containers.stream().map(container -> DevServicesResultBuildItem.owned()
+                .feature(FEATURE)
+                .serviceName(container.getRegistryName())
+                .startable(() -> container)
+                .configProvider(
+                        Map.of("quarkus.oras.registries." + container.getRegistryName() + ".host",
+                                ZotContainer::getConnectionInfo,
+                                "quarkus.oras.registries." + container.getRegistryName() + ".secure", c -> "false"))
+                .build())
+                .toList();
 
-        // Create a combined close action for all containers as a Closeable
-        Closeable closeAction = () -> {
-            for (ZotContainer container : containers) {
-                try {
-                    container.close();
-                } catch (Exception e) {
-                    LOG.warn("Failed to stop container: {}", e.getMessage(), e);
-                }
-            }
-        };
-
-        return new DevServicesResultBuildItem.RunningDevService(FEATURE,
-                primaryContainerId,
-                closeAction,
-                configOverrides).toBuildItem();
     }
 
     private static <T> SyntheticBeanBuildItem createRegistryBuildItem(

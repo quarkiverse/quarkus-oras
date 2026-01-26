@@ -34,8 +34,11 @@ public class OrasResource {
     @OrasRegistry("docker")
     Registry docker;
 
-    @OrasRegistry("devs")
-    Registry devServiceRegistry;
+    @OrasRegistry("devs1")
+    Registry devService1Registry;
+
+    @OrasRegistry("devs2")
+    Registry devService2Registry;
 
     @Inject
     OCILayouts ociLayouts;
@@ -87,10 +90,17 @@ public class OrasResource {
     }
 
     @GET
-    @Path("/devservice/get-repositories")
+    @Path("/devservice/get-repositories1")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getDevserviceRepositories() {
-        return devServiceRegistry.getRepositories().repositories();
+    public List<String> getDevserviceRepositories1() {
+        return devService1Registry.getRepositories().repositories();
+    }
+
+    @GET
+    @Path("/devservice/get-repositories2")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getDevserviceRepositories2() {
+        return devService2Registry.getRepositories().repositories();
     }
 
 }
