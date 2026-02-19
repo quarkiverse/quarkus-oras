@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import jakarta.inject.Singleton;
 
@@ -138,9 +139,14 @@ class RegistryProcessor {
 
         LOG.debug("Found " + annotations.size() + " classes annotated with @OrasModel");
 
-        String[] classNames = annotations.stream()
+        String[] classNames = Stream.concat(annotations.stream()
                 .map(annotation -> annotation.target().asClass().name().toString())
-                .distinct()
+                .distinct(),
+                Stream.of(
+                        "land.oras.auth.RegistriesConf$ConfigFile",
+                        "land.oras.auth.RegistriesConf$RegistryConfig",
+                        "land.oras.auth.RegistriesConf$ShortNameMode",
+                        "land.oras.auth.RegistriesConf$ParsedPrefix"))
                 .toArray(String[]::new);
 
         LOG.debug("Class names: " + String.join(", ", classNames));
