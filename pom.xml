@@ -9,7 +9,7 @@
   </parent>
   <groupId>io.quarkiverse.oras</groupId>
   <artifactId>quarkus-oras-parent</artifactId>
-  <version>0.1.4-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Quarkus Oras - Parent</name>
 
@@ -31,7 +31,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.32.0</quarkus.version>
-    <oras.version>0.3.3</oras.version>
+    <oras.version>0.4.0</oras.version>
   </properties>
 
   <dependencyManagement>
