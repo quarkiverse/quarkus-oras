@@ -3,7 +3,6 @@ package io.quarkiverse.oras.it;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -41,7 +40,6 @@ public class OrasResourceTest {
     }
 
     @Test
-    @Disabled("zstd compression is not supported in native mode for now")
     public void testCompressZstd() {
         given().when().get("/oras/compress-zstd").then().statusCode(200).body(is("ok"));
     }
