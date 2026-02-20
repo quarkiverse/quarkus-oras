@@ -30,6 +30,7 @@ import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.IndexDependencyBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.JniRuntimeAccessBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedPackageBuildItem;
@@ -157,6 +158,21 @@ class RegistryProcessor {
                 .constructors()
                 .fields()
                 .build();
+    }
+
+    @BuildStep
+    void registerZstdJni(BuildProducer<JniRuntimeAccessBuildItem> jniRuntimeAccessProducer) {
+        jniRuntimeAccessProducer.produce(new JniRuntimeAccessBuildItem(true, true, true,
+                "com.github.luben.zstd.ZstdCompressCtx",
+                "com.github.luben.zstd.ZstdDecompressCtx",
+                "com.github.luben.zstd.ZstdDictCompress",
+                "com.github.luben.zstd.ZstdDictDecompress",
+                "com.github.luben.zstd.ZstdDirectBufferCompressingStream$1",
+                "com.github.luben.zstd.ZstdDirectBufferCompressingStreamNoFinalizer",
+                "com.github.luben.zstd.ZstdDirectBufferDecompressingStream$1",
+                "com.github.luben.zstd.ZstdDirectBufferDecompressingStreamNoFinalizer",
+                "com.github.luben.zstd.ZstdInputStreamNoFinalizer",
+                "com.github.luben.zstd.ZstdOutputStreamNoFinalizer"));
     }
 
     @BuildStep
