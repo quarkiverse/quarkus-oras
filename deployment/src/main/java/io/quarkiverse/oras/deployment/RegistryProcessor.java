@@ -62,22 +62,26 @@ class RegistryProcessor {
     private static final ArtifactCoords ORAS_ARTIFACT = Dependency.of("land.oras", "oras-java-sdk", "*");
 
     @BuildStep
+    @SuppressWarnings("unused")
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     IndexDependencyBuildItem indexZstd() {
         return new IndexDependencyBuildItem(ZSTD_ARTIFACT.getGroupId(), ZSTD_ARTIFACT.getArtifactId());
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     IndexDependencyBuildItem indexOras() {
         return new IndexDependencyBuildItem(ORAS_ARTIFACT.getGroupId(), ORAS_ARTIFACT.getArtifactId());
     }
 
     @Record(ExecutionTime.RUNTIME_INIT)
     @BuildStep
+    @SuppressWarnings("unused")
     void produce(
             RegistriesBuildConfiguration registriesBuildConfiguration,
             RegistriesRecorder registriesRecorder,
@@ -110,6 +114,7 @@ class RegistryProcessor {
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     void nativeLib(CurateOutcomeBuildItem curateOutcome, BuildProducer<NativeImageResourceBuildItem> nativeBuildItemProducer) {
         var dependencies = curateOutcome.getApplicationModel().getRuntimeDependencies();
         nativeBuildItemProducer.produce(NativeImageResourceBuildItem.ofDependencyResources(
@@ -117,6 +122,7 @@ class RegistryProcessor {
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     void registerZstdReflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClassProducer) {
         reflectiveClassProducer.produce(ReflectiveClassBuildItem.builder(
                 "com.github.luben.zstd.ZstdCompressCtx",
@@ -134,6 +140,7 @@ class RegistryProcessor {
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     ReflectiveClassBuildItem registerOrasReflection(CombinedIndexBuildItem combinedIndex) {
 
         var annotations = combinedIndex.getIndex().getAnnotations(DotName.createSimple(OrasModel.class.getName()));
@@ -144,10 +151,7 @@ class RegistryProcessor {
                 .map(annotation -> annotation.target().asClass().name().toString())
                 .distinct(),
                 Stream.of(
-                        "land.oras.auth.RegistriesConf$ConfigFile",
-                        "land.oras.auth.RegistriesConf$RegistryConfig",
-                        "land.oras.auth.RegistriesConf$ShortNameMode",
-                        "land.oras.auth.RegistriesConf$ParsedPrefix"))
+                        "land.oras.auth.AuthStore$ConfigFile"))
                 .toArray(String[]::new);
 
         LOG.debug("Class names: " + String.join(", ", classNames));
@@ -161,6 +165,7 @@ class RegistryProcessor {
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     void registerZstdJni(BuildProducer<JniRuntimeAccessBuildItem> jniRuntimeAccessProducer) {
         jniRuntimeAccessProducer.produce(new JniRuntimeAccessBuildItem(true, true, true,
                 "com.github.luben.zstd.ZstdCompressCtx",
@@ -176,12 +181,14 @@ class RegistryProcessor {
     }
 
     @BuildStep
+    @SuppressWarnings("unused")
     void runtimePackages(BuildProducer<RuntimeInitializedPackageBuildItem> packagesProducer) {
         packagesProducer.produce(new RuntimeInitializedPackageBuildItem(
                 "com.github.luben.zstd"));
     }
 
     @BuildStep(onlyIfNot = IsProduction.class, onlyIf = DevServicesConfig.Enabled.class)
+    @SuppressWarnings("unused")
     public List<DevServicesResultBuildItem> createContainers(RegistriesBuildConfiguration registriesConfig,
             OrasDevServicesConfig devServicesConfig) {
 

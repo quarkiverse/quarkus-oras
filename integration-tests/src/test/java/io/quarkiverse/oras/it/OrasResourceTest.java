@@ -30,8 +30,18 @@ public class OrasResourceTest {
     }
 
     @Test
+    public void testPullDefaultsIndex() {
+        given().when().get("/oras/pull-defaults-index").then().statusCode(200);
+    }
+
+    @Test
     public void testGetTags() {
         given().when().get("/oras/get-tags").then().statusCode(200);
+    }
+
+    @Test
+    public void testGetDefaultsTags() {
+        given().when().get("/oras/get-defaults-tags").then().statusCode(200);
     }
 
     @Test

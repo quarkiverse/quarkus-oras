@@ -34,6 +34,9 @@ public class OrasResource {
     @OrasRegistry("docker")
     Registry docker;
 
+    @OrasRegistry("defaults")
+    Registry defaults;
+
     @OrasRegistry("devs1")
     Registry devService1Registry;
 
@@ -47,7 +50,6 @@ public class OrasResource {
     @GET
     @Produces("text/plain")
     public Response injectionWorks() {
-        String layoutName = "test";
         if (docker == null || foo == null || bar == null || samples == null) {
             return Response.serverError().entity("Registry Injection failed").build();
         }
@@ -78,8 +80,15 @@ public class OrasResource {
     @GET
     @Path("/pull-index")
     @Produces(MediaType.APPLICATION_JSON)
-    public String manifest() {
+    public String index() {
         return docker.getIndex(ContainerRef.parse("library/alpine:latest")).getJson();
+    }
+
+    @GET
+    @Path("/pull-defaults-index")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String defaultIndex() {
+        return defaults.getIndex(ContainerRef.parse("library/alpine:latest")).getJson();
     }
 
     @GET
@@ -87,6 +96,13 @@ public class OrasResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> getTags() {
         return docker.getTags(ContainerRef.parse("library/alpine:latest")).tags();
+    }
+
+    @GET
+    @Path("/get-defaults-tags")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getDefaultsTags() {
+        return defaults.getTags(ContainerRef.parse("library/alpine:latest")).tags();
     }
 
     @GET

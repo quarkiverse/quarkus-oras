@@ -11,11 +11,19 @@ import io.smallrye.config.WithDefault;
 public interface RegistryConfiguration {
 
     /**
+     * Enable the registry without any specific host or credentials so any FQDN reference (or via alias) can be resolved.
+     *
+     * @asciidoclet
+     */
+    @SuppressWarnings("unused")
+    Optional<Boolean> defaults();
+
+    /**
      * The registry default host
      *
      * @asciidoclet
      */
-    String host();
+    Optional<String> host();
 
     /**
      * The registry username

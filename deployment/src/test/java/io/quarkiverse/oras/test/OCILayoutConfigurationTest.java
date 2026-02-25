@@ -12,7 +12,7 @@ import io.quarkiverse.oras.runtime.OCILayoutsConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkus.test.QuarkusUnitTest;
 
-public class OCILayoutConfigurationTest {
+class OCILayoutConfigurationTest {
 
     @Inject
     RegistriesConfiguration registriesConfiguration;
@@ -25,7 +25,7 @@ public class OCILayoutConfigurationTest {
             .withConfigurationResource("oci-layout.properties");
 
     @Test
-    public void shouldHaveConfiguration() {
+    void shouldHaveConfiguration() {
         assertTrue(registriesConfiguration.names().isEmpty(), "No registries should be configured");
         assertEquals("/var/storage", ociLayoutsConfiguration.path());
     }

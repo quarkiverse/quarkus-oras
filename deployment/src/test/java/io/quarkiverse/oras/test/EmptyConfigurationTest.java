@@ -14,7 +14,7 @@ import io.quarkiverse.oras.runtime.OCILayoutsConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkus.test.QuarkusUnitTest;
 
-public class EmptyConfigurationTest {
+class EmptyConfigurationTest {
 
     @Inject
     RegistriesConfiguration registriesConfiguration;
@@ -27,7 +27,7 @@ public class EmptyConfigurationTest {
             .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
     @Test
-    public void shouldHaveEmptyRegistry() {
+    void shouldHaveEmptyRegistry() {
         assertTrue(registriesConfiguration.names().isEmpty(), "No registries should be configured");
         assertEquals(".", ociLayoutsConfiguration.path());
     }
