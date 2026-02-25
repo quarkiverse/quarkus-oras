@@ -135,6 +135,27 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
+a| [[quarkus-oras_quarkus-oras-registries-names-defaults]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-defaults[`quarkus.oras.registries."names".defaults`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".defaults+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable the registry without any specific host or credentials so any FQDN reference (or via alias) can be resolved.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__DEFAULTS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__DEFAULTS+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
+
 a| [[quarkus-oras_quarkus-oras-registries-names-host]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-host[`quarkus.oras.registries."names".host`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".host+++[]
@@ -154,7 +175,7 @@ Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__HOST+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|required icon:exclamation-circle[title=Configuration property is required]
+|
 
 a| [[quarkus-oras_quarkus-oras-registries-names-username]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-username[`quarkus.oras.registries."names".username`]##
 ifdef::add-copy-button-to-config-props[]

@@ -29,13 +29,20 @@ mvn verify -Dnative -Dnative.surefire.skip
 
 ```
 mvn verify -Dnative -Dnative.surefire.skip
-export QUARKUS_ORAS_REGISTRIES_DEVS1_HOST=localhost:5000
-export QUARKUS_ORAS_REGISTRIES_DEVS2_HOST=localhost:5001
-./integration-tests/target/quarkus-oras-integration-tests-0.2.0-SNAPSHOT-runner
+export QUARKUS_ORAS_REGISTRIES_DEVS1_DEFAULTS=true
+export QUARKUS_ORAS_REGISTRIES_DEVS2_DEFAULTS=true
+export QUARKUS_ORAS_REGISTRIES_DEFAULTS_DEFAULTS=true
+./integration-tests/target/quarkus-oras-integration-tests-0.2.1-SNAPSHOT-runner
 http :8080/oras/injection
 http :8080/oras/compress-gzip
+http :8080/oras/compress-zstd
 http :8080/oras/pull-index
+http :8080/oras/pull-defaults-index
 http :8080/oras/get-tags
+http :8080/oras/get-defaults-tags
+unset QUARKUS_ORAS_REGISTRIES_DEVS1_DEFAULTS
+unset QUARKUS_ORAS_REGISTRIES_DEVS2_DEFAULTS
+unset QUARKUS_ORAS_REGISTRIES_DEFAULTS_DEFAULTS
 ```
 
 ## Contributors ✨

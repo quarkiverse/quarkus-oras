@@ -51,7 +51,18 @@ public class Registries {
     public Registry createRegistry(String registryName) {
         RegistryConfiguration configuration = getConfiguration(registryName);
 
-        Registry.Builder builder = Registry.Builder.builder().withRegistry(configuration.host());
+        // Create a builder with defaults
+        Registry.Builder builder = Registry.Builder.builder();
+
+        // Default to true
+        if (configuration.defaults().orElse(true)) {
+            builder.defaults();
+        }
+
+        // Set the host if present
+        if (configuration.host().isPresent()) {
+            builder.withRegistry(configuration.host().get());
+        }
 
         // Set username/password if present
         if (configuration.username().isPresent() && configuration.password().isPresent()) {

@@ -14,7 +14,7 @@ import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkiverse.oras.runtime.RegistryConfiguration;
 import io.quarkus.test.QuarkusUnitTest;
 
-public class TwoRegistryConfigurationTest {
+class TwoRegistryConfigurationTest {
 
     @Inject
     RegistriesConfiguration registriesConfiguration;
@@ -24,7 +24,7 @@ public class TwoRegistryConfigurationTest {
             .withConfigurationResource("two-secure-registry.properties");
 
     @Test
-    public void shouldHaveOneInsecureRegistry() {
+    void shouldHaveOneInsecureRegistry() {
         Map<String, RegistryConfiguration> registries = registriesConfiguration.names();
         assertEquals(2, registries.size(), "There should be 2 registries configured");
         assertTrue(registries.containsKey("foobar"), "Registry foobar should be configured");
@@ -39,7 +39,7 @@ public class TwoRegistryConfigurationTest {
         assertTrue(configuration1.password().isPresent(), "Registry1 should have password");
         assertEquals("toto", configuration1.username().get(), "Registry1 should have username set");
         assertEquals("titi", configuration1.password().get(), "Registry1 should have password set");
-        assertEquals("localhost:5000", configuration1.host(), "Registry2 should have default host set");
+        assertEquals("localhost:5000", configuration1.host().orElseThrow(), "Registry2 should have default host set");
 
         // Check registry 2
         assertTrue(configuration2.secure(), "Registry2 should secure");
@@ -47,7 +47,7 @@ public class TwoRegistryConfigurationTest {
         assertTrue(configuration2.password().isPresent(), "Registry2 should have password");
         assertEquals("toto2", configuration2.username().get(), "Registry2 should have username set");
         assertEquals("titi2", configuration2.password().get(), "Registry2 should have password set");
-        assertEquals("localhost:5001", configuration2.host(), "Registry2 should have default host set");
+        assertEquals("localhost:5001", configuration2.host().orElseThrow(), "Registry2 should have default host set");
 
     }
 
