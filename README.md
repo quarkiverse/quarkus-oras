@@ -32,12 +32,14 @@ mvn verify -Dnative -Dnative.surefire.skip
 export QUARKUS_ORAS_REGISTRIES_DEVS1_DEFAULTS=true
 export QUARKUS_ORAS_REGISTRIES_DEVS2_DEFAULTS=true
 export QUARKUS_ORAS_REGISTRIES_DEFAULTS_DEFAULTS=true
-./integration-tests/target/quarkus-oras-integration-tests-0.2.1-SNAPSHOT-runner
+./integration-tests/target/quarkus-oras-integration-tests-0.2.2-SNAPSHOT-runner
 http :8080/oras/injection
 http :8080/oras/compress-gzip
 http :8080/oras/compress-zstd
+http :8080/oras/compress-zip
 http :8080/oras/pull-index
 http :8080/oras/pull-defaults-index
+http :8080/oras/pull-manifest
 http :8080/oras/get-tags
 http :8080/oras/get-defaults-tags
 unset QUARKUS_ORAS_REGISTRIES_DEVS1_DEFAULTS

@@ -69,6 +69,15 @@ public class OrasResource {
     }
 
     @GET
+    @Path("/compress-zip")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String compressZip() throws Exception {
+        LocalPath tar = ArchiveUtils.tar(LocalPath.of("src"));
+        ArchiveUtils.compress(tar, Const.ZIP_MEDIA_TYPE); // zip
+        return "ok";
+    }
+
+    @GET
     @Path("/compress-zstd")
     @Produces(MediaType.TEXT_PLAIN)
     public String compressZstd() throws Exception {
@@ -82,6 +91,16 @@ public class OrasResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String index() {
         return docker.getIndex(ContainerRef.parse("library/alpine:latest")).getJson();
+    }
+
+    @GET
+    @Path("/pull-manifest")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String manifest() {
+        return docker
+                .getManifest(ContainerRef
+                        .parse("library/alpine@sha256:59855d3dceb3ae53991193bd03301e082b2a7faa56a514b03527ae0ec2ce3a95"))
+                .getJson();
     }
 
     @GET

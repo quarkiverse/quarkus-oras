@@ -30,6 +30,11 @@ public class OrasResourceTest {
     }
 
     @Test
+    public void testPullManifest() {
+        given().when().get("/oras/pull-manifest").then().statusCode(200);
+    }
+
+    @Test
     public void testPullDefaultsIndex() {
         given().when().get("/oras/pull-defaults-index").then().statusCode(200);
     }
@@ -52,6 +57,11 @@ public class OrasResourceTest {
     @Test
     public void testCompressZstd() {
         given().when().get("/oras/compress-zstd").then().statusCode(200).body(is("ok"));
+    }
+
+    @Test
+    public void testCompressZip() {
+        given().when().get("/oras/compress-zip").then().statusCode(200).body(is("ok"));
     }
 
     @Test
