@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-image-name]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-image-name[`quarkus.oras.devservices.image-name`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-image-name]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-image-name[`+++quarkus.oras.devservices.image-name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.devservices.image-name+++[]
 endif::add-copy-button-to-config-props[]
@@ -28,7 +28,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++ghcr.io/project-zot/zot-linux-amd64:v2.1.14+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-base-port]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-base-port[`quarkus.oras.devservices.base-port`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-base-port]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-base-port[`+++quarkus.oras.devservices.base-port+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.devservices.base-port+++[]
 endif::add-copy-button-to-config-props[]
@@ -49,7 +49,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++5000+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-reuse]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-reuse[`quarkus.oras.devservices.reuse`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-devservices-reuse]] [.property-path]##link:#quarkus-oras_quarkus-oras-devservices-reuse[`+++quarkus.oras.devservices.reuse+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.devservices.reuse+++[]
 endif::add-copy-button-to-config-props[]
@@ -70,7 +70,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-oras_quarkus-oras-layouts-path]] [.property-path]##link:#quarkus-oras_quarkus-oras-layouts-path[`quarkus.oras.layouts.path`]##
+a| [[quarkus-oras_quarkus-oras-layouts-path]] [.property-path]##link:#quarkus-oras_quarkus-oras-layouts-path[`+++quarkus.oras.layouts.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.layouts.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -91,7 +91,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++.+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-enabled]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-enabled[`quarkus.oras.registries."names".enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-enabled]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-enabled[`+++quarkus.oras.registries."names".enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -113,7 +113,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-devservice]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-devservice[`quarkus.oras.registries."names".devservice`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-oras_quarkus-oras-registries-names-devservice]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-devservice[`+++quarkus.oras.registries."names".devservice+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".devservice+++[]
 endif::add-copy-button-to-config-props[]
@@ -135,7 +135,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[quarkus-oras_quarkus-oras-registries-names-defaults]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-defaults[`quarkus.oras.registries."names".defaults`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-defaults]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-defaults[`+++quarkus.oras.registries."names".defaults+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".defaults+++[]
 endif::add-copy-button-to-config-props[]
@@ -156,7 +156,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a| [[quarkus-oras_quarkus-oras-registries-names-host]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-host[`quarkus.oras.registries."names".host`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-host]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-host[`+++quarkus.oras.registries."names".host+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".host+++[]
 endif::add-copy-button-to-config-props[]
@@ -177,7 +177,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-oras_quarkus-oras-registries-names-username]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-username[`quarkus.oras.registries."names".username`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-username]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-username[`+++quarkus.oras.registries."names".username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".username+++[]
 endif::add-copy-button-to-config-props[]
@@ -198,7 +198,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-oras_quarkus-oras-registries-names-password]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-password[`quarkus.oras.registries."names".password`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-password]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-password[`+++quarkus.oras.registries."names".password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".password+++[]
 endif::add-copy-button-to-config-props[]
@@ -219,7 +219,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-oras_quarkus-oras-registries-names-secure]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-secure[`quarkus.oras.registries."names".secure`]##
+a| [[quarkus-oras_quarkus-oras-registries-names-secure]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-secure[`+++quarkus.oras.registries."names".secure+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".secure+++[]
 endif::add-copy-button-to-config-props[]
