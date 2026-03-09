@@ -31,6 +31,10 @@ target/
 
 # IDEs
 .idea/
+.factorypath
+.project
+.classpath
+.settings/
 
 # When testing JSON files
 *.json
