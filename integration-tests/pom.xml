@@ -28,6 +28,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
+    <!--  to check that MeterRegistry are properly bound to custom Metrics implementations -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit</artifactId>

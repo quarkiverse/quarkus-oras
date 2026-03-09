@@ -1,6 +1,7 @@
 package io.quarkiverse.oras.it;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,16 @@ public class OrasResourceTest {
     }
 
     @Test
-    public void testPullIndex() {
+    public void testPullIndexAndCheckMetrics() {
         given().when().get("/oras/pull-index").then().statusCode(200);
+        given().when().get("/q/metrics")
+                .then()
+                .statusCode(200)
+                // Application metrics
+                .body(containsString("land_oras_auth_token_refresh_total"))
+
+                // Caffeine cache metrics
+                .body(containsString("cache_size{cache=\"land.oras.token.cache\"}"));
     }
 
     @Test
