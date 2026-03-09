@@ -3,11 +3,14 @@ package io.quarkiverse.oras.runtime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import io.quarkus.arc.Arc;
 import land.oras.Registry;
 
@@ -28,6 +31,12 @@ public class Registries {
      * Runtime configuration
      */
     private final RegistriesBuildConfiguration registriesBuildConfiguration;
+
+    /**
+     * Optional MeterRegistry for metrics - will be null if quarkus-micrometer is not present
+     */
+    @Inject
+    Instance<MeterRegistry> meterRegistry;
 
     /**
      * Registries
@@ -70,6 +79,14 @@ public class Registries {
         }
         if (!configuration.secure()) {
             builder.insecure();
+        }
+
+        // Set MeterRegistry if available (optional dependency)
+        if (meterRegistry != null && !meterRegistry.isUnsatisfied()) {
+            LOG.debug("Setting MeterRegistry for registry '{}'", registryName);
+            builder.withMeterRegistry(meterRegistry.get());
+        } else {
+            LOG.debug("MeterRegistry not available for registry '{}' - continuing without metrics", registryName);
         }
 
         return builder.build();

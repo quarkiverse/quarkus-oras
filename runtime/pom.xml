@@ -24,6 +24,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-devservices</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-micrometer</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
   <build>
