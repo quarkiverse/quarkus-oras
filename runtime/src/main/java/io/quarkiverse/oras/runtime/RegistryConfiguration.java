@@ -1,5 +1,6 @@
 package io.quarkiverse.oras.runtime;
 
+import java.nio.file.Path;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
@@ -38,6 +39,29 @@ public interface RegistryConfiguration {
      * @asciidoclet
      */
     Optional<String> password();
+
+    /**
+     * Current default parallelism (only to download layers)
+     *
+     * @return Current parallelism
+     */
+    Optional<Integer> parallelism();
+
+    /**
+     * If using custom CA. provide the CA bundle file (pem encoded)
+     * Note it replace any system CA for this registry to only use the ones provided
+     *
+     * @return The path
+     */
+    Optional<Path> caFile();
+
+    /**
+     * If using custom CA. provide the CA bundle (pem encoded)
+     * Note it replace any system CA for this registry to only use the ones provided
+     *
+     * @return The CA bundle
+     */
+    Optional<String> caBundle();
 
     /**
      * An optional boolean to enable secure connection.
