@@ -73,12 +73,27 @@ public class Registries {
             builder.withRegistry(configuration.host().get());
         }
 
+        // Parallelism
+        if (configuration.parallelism().isPresent()) {
+            builder.withParallelism(configuration.parallelism().get());
+        }
+
         // Set username/password if present
         if (configuration.username().isPresent() && configuration.password().isPresent()) {
             builder.defaults(configuration.username().get(), configuration.password().get());
         }
         if (!configuration.secure()) {
             builder.insecure();
+        }
+
+        // Set CA file if present
+        if (configuration.caFile().isPresent()) {
+            builder.withCaFile(configuration.caFile().get());
+        }
+
+        // Set CA bundle if present
+        if (configuration.caBundle().isPresent()) {
+            builder.withCaContent(configuration.caBundle().get());
         }
 
         // Set MeterRegistry if available (optional dependency)

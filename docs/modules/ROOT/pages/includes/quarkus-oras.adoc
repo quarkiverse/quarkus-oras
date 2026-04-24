@@ -219,6 +219,69 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
+a| [[quarkus-oras_quarkus-oras-registries-names-parallelism]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-parallelism[`+++quarkus.oras.registries."names".parallelism+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".parallelism+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Current default parallelism (only to download layers)
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__PARALLELISM+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__PARALLELISM+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
+a| [[quarkus-oras_quarkus-oras-registries-names-ca-file]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-ca-file[`+++quarkus.oras.registries."names".ca-file+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".ca-file+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If using custom CA. provide the CA bundle file (pem encoded) Note it replace any system CA for this registry to only use the ones provided
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__CA_FILE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__CA_FILE+++`
+endif::add-copy-button-to-env-var[]
+--
+|path
+|
+
+a| [[quarkus-oras_quarkus-oras-registries-names-ca-bundle]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-ca-bundle[`+++quarkus.oras.registries."names".ca-bundle+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".ca-bundle+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If using custom CA. provide the CA bundle (pem encoded) Note it replace any system CA for this registry to only use the ones provided
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__CA_BUNDLE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__CA_BUNDLE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
 a| [[quarkus-oras_quarkus-oras-registries-names-secure]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-secure[`+++quarkus.oras.registries."names".secure+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".secure+++[]
