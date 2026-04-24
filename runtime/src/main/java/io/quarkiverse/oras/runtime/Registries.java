@@ -78,10 +78,13 @@ public class Registries {
             builder.withParallelism(configuration.parallelism().get());
         }
 
-        // Set username/password if present
+        // Set authentication
         if (configuration.username().isPresent() && configuration.password().isPresent()) {
             builder.defaults(configuration.username().get(), configuration.password().get());
+        } else if (configuration.token().isPresent()) {
+            builder.withAuthToken(configuration.token().get());
         }
+
         if (!configuration.secure()) {
             builder.insecure();
         }
