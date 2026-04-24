@@ -219,6 +219,27 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
+a| [[quarkus-oras_quarkus-oras-registries-names-token]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-token[`+++quarkus.oras.registries."names".token+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".token+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Registries that accept a long living Bearer token. Conflict with username / password flow
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__TOKEN+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__TOKEN+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
 a| [[quarkus-oras_quarkus-oras-registries-names-parallelism]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-parallelism[`+++quarkus.oras.registries."names".parallelism+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".parallelism+++[]

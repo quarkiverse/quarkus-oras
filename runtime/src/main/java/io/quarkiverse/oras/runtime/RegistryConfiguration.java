@@ -41,6 +41,13 @@ public interface RegistryConfiguration {
     Optional<String> password();
 
     /**
+     * Registries that accept a long living Bearer token. Conflict with username / password flow
+     *
+     * @asciidoclet
+     */
+    Optional<String> token();
+
+    /**
      * Current default parallelism (only to download layers)
      *
      * @return Current parallelism
