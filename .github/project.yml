@@ -1,4 +1,4 @@
 name: Quarkus ORAS
 release:
-  current-version: "0.4.3"
-  next-version: "0.4.4-SNAPSHOT"
+  current-version: "0.4.4"
+  next-version: "0.4.5-SNAPSHOT"
