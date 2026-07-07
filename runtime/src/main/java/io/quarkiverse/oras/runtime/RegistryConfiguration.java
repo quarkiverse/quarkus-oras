@@ -55,6 +55,28 @@ public interface RegistryConfiguration {
     Optional<Integer> parallelism();
 
     /**
+     * The policy file to use. If not set policies are not loaded
+     * Typically found on /etc/containers/policy.json
+     *
+     * @return The policy file
+     */
+    Optional<Path> policy();
+
+    /**
+     * The max page for listing tags and referrers (avoid infinite loop)
+     *
+     * @return The max pages
+     */
+    Optional<Integer> maxPages();
+
+    /**
+     * The number of max retry for fail requests
+     *
+     * @return May retry
+     */
+    Optional<Integer> maxRetries();
+
+    /**
      * If using custom CA. provide the CA bundle file (pem encoded)
      * Note it replace any system CA for this registry to only use the ones provided
      *
