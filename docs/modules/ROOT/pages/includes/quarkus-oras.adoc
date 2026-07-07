@@ -261,6 +261,69 @@ endif::add-copy-button-to-env-var[]
 |int
 |
 
+a| [[quarkus-oras_quarkus-oras-registries-names-policy]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-policy[`+++quarkus.oras.registries."names".policy+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".policy+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The policy file to use. If not set policies are not loaded Typically found on /etc/containers/policy.json
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__POLICY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__POLICY+++`
+endif::add-copy-button-to-env-var[]
+--
+|path
+|
+
+a| [[quarkus-oras_quarkus-oras-registries-names-max-pages]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-max-pages[`+++quarkus.oras.registries."names".max-pages+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".max-pages+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The max page for listing tags and referrers (avoid infinite loop)
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__MAX_PAGES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__MAX_PAGES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
+a| [[quarkus-oras_quarkus-oras-registries-names-max-retries]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-max-retries[`+++quarkus.oras.registries."names".max-retries+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.oras.registries."names".max-retries+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The number of max retry for fail requests
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ORAS_REGISTRIES__NAMES__MAX_RETRIES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ORAS_REGISTRIES__NAMES__MAX_RETRIES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
 a| [[quarkus-oras_quarkus-oras-registries-names-ca-file]] [.property-path]##link:#quarkus-oras_quarkus-oras-registries-names-ca-file[`+++quarkus.oras.registries."names".ca-file+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.oras.registries."names".ca-file+++[]

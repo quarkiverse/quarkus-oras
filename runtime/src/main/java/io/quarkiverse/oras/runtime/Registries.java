@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.quarkus.arc.Arc;
 import land.oras.Registry;
+import land.oras.policy.ContainersPolicy;
 
 @Singleton
 public class Registries {
@@ -76,6 +77,22 @@ public class Registries {
         // Parallelism
         if (configuration.parallelism().isPresent()) {
             builder.withParallelism(configuration.parallelism().get());
+        }
+
+        // Policy
+        if (configuration.policy().isPresent()) {
+            builder.withPolicy(ContainersPolicy.newPolicy(configuration.policy().get()));
+        }
+
+        // Max tags
+        if (configuration.maxPages().isPresent()) {
+            builder.withTagListMaxPages(configuration.maxPages().get());
+            builder.withReferrerListMaxPages(configuration.maxPages().get());
+        }
+
+        // Max retries
+        if (configuration.maxRetries().isPresent()) {
+            builder.withMaxRetries(configuration.maxRetries().get());
         }
 
         // Set authentication
