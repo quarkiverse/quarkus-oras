@@ -39,6 +39,7 @@ target/
 # When testing JSON files
 *.json
 oci/
+!.github/renovate.json
 !src/test/resources/oci/
 !src/test/resources/oci/**/*.json
 integration-tests/test-layouts/**
