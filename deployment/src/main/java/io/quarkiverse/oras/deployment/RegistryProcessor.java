@@ -31,6 +31,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.IndexDependencyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.JniRuntimeAccessBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.NativeImageSystemPropertyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedPackageBuildItem;
 import io.quarkus.deployment.dev.devservices.DevServicesConfig;
@@ -182,6 +183,21 @@ class RegistryProcessor {
     void runtimePackages(BuildProducer<RuntimeInitializedPackageBuildItem> packagesProducer) {
         packagesProducer.produce(new RuntimeInitializedPackageBuildItem(
                 "com.github.luben.zstd"));
+    }
+
+    /**
+     * Since zstd-jni 1.5.7+, the jar is a multi-release jar shipping a JDK 22+ variant of its binding
+     * that uses the Foreign Function &amp; Memory API instead of JNI. The Mandrel/GraalVM builder runs
+     * on a JDK new enough to pick that variant, but its foreign downcalls aren't registered for native
+     * image, which fails at runtime with a {@code MissingForeignRegistrationError}. Forcing the builder
+     * JVM to ignore multi-release variants makes it fall back to the classic JNI implementation, which
+     * is the one registered above via {@link #registerZstdJni} and {@link #registerZstdReflection}.
+     */
+    @BuildStep
+    @SuppressWarnings("unused")
+    void disableZstdMultiReleaseJar(BuildProducer<NativeImageSystemPropertyBuildItem> systemPropertyProducer) {
+        systemPropertyProducer.produce(
+                new NativeImageSystemPropertyBuildItem("jdk.util.jar.enableMultiRelease", "false"));
     }
 
     @BuildStep(onlyIfNot = IsProduction.class, onlyIf = DevServicesConfig.Enabled.class)
