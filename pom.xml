@@ -30,7 +30,7 @@
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.version>3.37.3</quarkus.version>
+    <quarkus.version>3.40.1.1</quarkus.version>
     <oras.version>0.8.5</oras.version>
   </properties>
 
@@ -42,6 +42,12 @@
         <version>${quarkus.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!-- ORAS Java SDK uses Jackson 3.2 which requires jackson-annotations 2.22 (Quarkus LTS manages 2.21) -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>2.22</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
