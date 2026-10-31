@@ -38,6 +38,8 @@ target/
 
 # When testing JSON files
 *.json
+!mcp.json
+!.pi/mcp.json
 oci/
 !.github/renovate.json
 !src/test/resources/oci/
