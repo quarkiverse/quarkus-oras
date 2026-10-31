@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "quarkus-agent": {
+      "command": "jbang",
+      "args": ["quarkus-agent-mcp@quarkusio"]
+    },
+    "huginn": {
+      "command": "jbang",
+      "args": ["--quiet", "huginn-mcp@maveniverse"]
+    }
+  }
+}
