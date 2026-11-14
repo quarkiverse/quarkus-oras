@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.quarkiverse.oras.runtime.OCILayoutsConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesConfiguration;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 
 class EmptyConfigurationTest {
 
@@ -23,7 +23,7 @@ class EmptyConfigurationTest {
     OCILayoutsConfiguration ociLayoutsConfiguration;
 
     @RegisterExtension
-    static final QuarkusUnitTest unitTest = new QuarkusUnitTest()
+    static final QuarkusExtensionTest unitTest = new QuarkusExtensionTest()
             .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
     @Test
