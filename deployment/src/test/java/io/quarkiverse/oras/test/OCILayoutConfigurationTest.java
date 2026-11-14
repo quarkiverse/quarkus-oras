@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.quarkiverse.oras.runtime.OCILayoutsConfiguration;
 import io.quarkiverse.oras.runtime.RegistriesConfiguration;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 
 class OCILayoutConfigurationTest {
 
@@ -21,7 +21,7 @@ class OCILayoutConfigurationTest {
     OCILayoutsConfiguration ociLayoutsConfiguration;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withConfigurationResource("oci-layout.properties");
 
     @Test

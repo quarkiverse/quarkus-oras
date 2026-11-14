@@ -69,7 +69,7 @@ All configuration is under the `quarkus.oras.*` prefix.
 
 ## Testing Patterns
 
-- **Deployment unit tests** (`deployment/src/test/`) use `QuarkusUnitTest` and load configuration from `.properties` files in `deployment/src/test/resources/`.
+- **Deployment unit tests** (`deployment/src/test/`) use `QuarkusExtensionTest` and load configuration from `.properties` files in `deployment/src/test/resources/`.
 - **Integration tests** (`integration-tests/`) use `@QuarkusTest` + REST-assured against a running `OrasResource` JAX-RS endpoint.
 - Dev services automatically start a Zot registry container when tests run, so no manual registry setup is required.
 

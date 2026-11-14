@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.quarkiverse.oras.runtime.RegistriesConfiguration;
 import io.quarkiverse.oras.runtime.RegistryConfiguration;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 
 class OneDefaultRegistryConfigurationTest {
 
@@ -18,7 +18,7 @@ class OneDefaultRegistryConfigurationTest {
     RegistriesConfiguration registriesConfiguration;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withConfigurationResource("one-default-registry.properties");
 
     @Test
