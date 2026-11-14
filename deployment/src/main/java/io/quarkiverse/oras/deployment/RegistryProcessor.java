@@ -186,18 +186,17 @@ class RegistryProcessor {
     }
 
     /**
-     * Since zstd-jni 1.5.7+, the jar is a multi-release jar shipping a JDK 22+ variant of its binding
-     * that uses the Foreign Function &amp; Memory API instead of JNI. The Mandrel/GraalVM builder runs
-     * on a JDK new enough to pick that variant, but its foreign downcalls aren't registered for native
-     * image, which fails at runtime with a {@code MissingForeignRegistrationError}. Forcing the builder
-     * JVM to ignore multi-release variants makes it fall back to the classic JNI implementation, which
-     * is the one registered above via {@link #registerZstdJni} and {@link #registerZstdReflection}.
+     * Since zstd-jni 1.5.7+, the jar ships a JDK 22+ variant of its binding that uses the Foreign
+     * Function &amp; Memory API instead of JNI. The Mandrel/GraalVM builder runs on a newer JDK, but
+     * its foreign downcalls aren't registered for native image. Select the JDK 21 multi-release
+     * variant so zstd uses the classic JNI implementation registered above, while retaining JDK 21
+     * variants in other dependencies (including Vert.x's Jackson 3 classes).
      */
     @BuildStep
     @SuppressWarnings("unused")
-    void disableZstdMultiReleaseJar(BuildProducer<NativeImageSystemPropertyBuildItem> systemPropertyProducer) {
+    void setMultiReleaseJarVersion(BuildProducer<NativeImageSystemPropertyBuildItem> systemPropertyProducer) {
         systemPropertyProducer.produce(
-                new NativeImageSystemPropertyBuildItem("jdk.util.jar.enableMultiRelease", "false"));
+                new NativeImageSystemPropertyBuildItem("jdk.util.jar.version", "21"));
     }
 
     @BuildStep(onlyIfNot = IsProduction.class, onlyIf = DevServicesConfig.Enabled.class)
