@@ -1,5 +1,5 @@
 name: quarkus-oras
 title: ORAS
-version: dev
+version: "0.8.x"
 nav:
   - modules/ROOT/nav.adoc
