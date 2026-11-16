@@ -2,5 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>quarkiverse/renovate-config"
-  ]
+  ],
+  "baseBranches": ["main", "0.8.x"]
 }
