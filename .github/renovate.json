@@ -3,5 +3,8 @@
   "extends": [
     "github>quarkiverse/renovate-config"
   ],
-  "baseBranches": ["main", "0.8.x"]
+  "baseBranchPatterns": [
+    "main",
+    "0.8.x"
+  ]
 }
